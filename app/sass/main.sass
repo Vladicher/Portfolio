@@ -1,0 +1,280 @@
+@import "fonts"
+@import "libs"
+@import "base"
+@import "vars"
+
+.grid
+	display: grid
+
+.main-header
+	min-height: 100vh //означает что занимает всю высоту экрана
+	background-size: cover //Чтоб не расползался и занимал всю площадь
+	background-position: center // Центрирование
+	position: relative //Так как будут находится элементы внутри background
+	align-content: center //Вертикально центрируем контент
+	&::before
+		content: ''
+		position: absolute
+		top: 0
+		right: 0
+		bottom: 0
+		left: 0 // Все вышеуказанное требуется для растяжки before на всю величину
+		background-color: $dark
+		opacity: 0.9
+
+	.header-content
+		z-index: 1 // Чтобы контент был поверх фона затемнения before
+		color: #fff
+		text-align: center
+		padding: 60px $gutter // При уменьшение масштаба, текст не будет упираться,нужно для мобильных
+		h1 // Оформление загаловка
+			font-size: 60px
+			font-family: intro-grid, sans-serif
+			font-weight: normal // Делает шрифт не жирным
+			margin: 20px 0
+			line-height: 1.5
+		.button
+			margin: 10px
+
+.button
+	display: inline-block
+	border: none
+	color: #fff
+	text-decoration: none
+	background-color: $accent
+	padding: 10px 60px
+	font-size: 20px
+	text-transform: uppercase // Делает буквы либо все строчные,либо заглавные и т.д.
+	font-weight: 800
+	letter-spacing: 3px // Расстояние между буквами
+	border-radius: 2px
+	text-align: center
+	position: relative
+	outline: none
+	transition: background-color .1s ease
+	cursor: pointer
+	&::after // Анимация кнопок, затухание,наложение,эффект при наведение
+		transition: background-color .2s ease
+		position: absolute
+		content: ''
+		height: 4px
+		bottom: 0
+		width: 100%
+		background-color: darken($accent, 50%)
+		opacity: .18
+		border-bottom-left-radius: 2px
+		border-bottom-right-radius: 2px
+		left: 0
+	&:focus, &:hover
+		text-decoration: none
+		color: #fff
+	&:hover
+		background-color: lighten($accent, 5%)
+		&::after
+			opacity: .22
+	&:active
+		background-color: darken($accent, 5%)
+		&::after
+			opacity: .32
+
+	&.button-gray // дочерний элемент кнопки, изменяем цвет кнопки
+		background-color: #4B5A65
+		&::after // нижнее подчеркивание у кнопки
+			background-color: darken($gray, 15%) //Затемнение
+		&:hover // Эффект при наведение
+			background-color: lighten($gray, 6%) // Осветление
+			&::after
+				opacity: .22
+		&:active // Эффект при нажатии
+			background-color: darken($gray,3%)
+			opacity: .75
+
+.portfolio-section
+	padding: 10px
+	grid-template-columns: repeat(4, 1fr)// создание колонок в секции, 4-кол-во, 1fr-ширина
+	grid-gap: 10px// расстояние между колонками
+
+.portfolio-item
+	min-height: 32vh //минимальная высота колонок
+	background-size: cover // Чтоб картинка не растянутой была
+	background-position: center 
+	text-align: center // выравнивание по горизонтали
+	align-content: center // выравнивание по вертикали		
+	padding: $gutter // при малых разрешениях, чтобы текст не касался края картинки(секции)
+	font-size: 20px
+	font-weight: bold // Жирность
+	color: #fff
+	position: relative	// Чтоб ничего не уезжало, и 1ая секция overlay больше чем у других
+	transition: color .5s ease //анимация исходного значения
+	cursor: pointer
+	&:hover
+		color: $accent //Прорабатываем before для анимации <  =========
+		&::before
+			opacity: .85	
+	&::before                                               //        ||
+		content: ""//Всегда в before надо ставить пустой content      || 
+		position: absolute                                  //        ||
+		top: 0
+		right: 0
+		bottom: 0	                                         //       ||
+		left: 0                                              //       || 
+		background-color: $dark                             //        || 
+		opacity: .45                                        //        || 
+		transition: opacity .5s ease //При наведение меняется opacity ||
+	> * // Обращение к дочернему элементу, для того чтобы текст был поверх секции
+		z-index: 1
+
+	&:nth-child(1) // обозначение первого элемента в grid сетке
+		grid-column: 1 / 3
+	&:nth-child(5) // обозначение пятого элемента в grid сетке
+		grid-column: 2 / 4
+	&:nth-child(6)
+		grid-column: 4
+		grid-row: 2 / 4
+
+
+.buttoncase	
+	grid-column: 1/5
+	padding: $gutter 0 50px
+
+.container //Создаем контейне,после портфолио
+	max-width: 1200px // Максимальная ширина контейнера
+	margin: auto
+	padding: 0 $gutter
+
+.landing-section // все секции где будет отступ сверху и по бока
+	padding: 80px 0
+	h2
+		font-size: 32px
+		font-weight: 800
+		color: $dark
+		line-height: 1.2
+
+.section-ready
+	background-color: $light
+	.container
+		grid-template-columns: 1fr 1fr
+
+.ready-left
+	border-right: 1px solid #dadada 
+	font-size: 18px
+	padding: 
+		top: 60px
+		bottom: 60px
+		right: 60px
+h2
+	margin-top: 0
+	margin-bottom: 40px
+
+.ready-right
+	padding-left: 40px
+
+.formsection
+	padding: 30px 0
+	background-color: $dark
+	input
+		background-color: lighten($dark, 6%)
+	form
+		grid-gap: 20px // Расстояние между окнами для заполнение
+		grid-template-columns: repeat(4, 1fr) // Разбиваем на 4 колонки одинаковой ширины
+
+	.button
+		font-size: 17px
+		padding: 14.5px
+		width: 100%
+
+input, textarea // Стилизация окон заполнение
+	border: none
+	padding: 15px 20px
+	width: 100%
+	font-family: Arial, sans-serif 
+	font-style: italic
+	outline: none // Убираем рамочку при наведение
+	transition: background-color .25 ease    //Анимация окон заполнение
+	&:focus
+		background-color: $light 
+		
+
+	&::placeholder //Псевдоэлемент, изменяем текст в окне, чтобы не сильно выделялся
+		color: lighten($dark,20%)
+
+.section-blog
+	h2
+		margin:
+			top: 0px
+			bottom: 50px
+	.buttoncase
+		padding-bottom: 0	
+
+.blog-home
+	grid-gap:	$gutter
+	grid-template-columns: repeat(4, 1fr)
+
+.blog-item // Стилизуем все айтемы
+	background-color: #f7f7f7
+	text-decoration: none
+	grid-template-rows: 1fr 1fr //Разбивка каждого айтема по вертикали на 2 фракции
+	transition: background-color .25s ease	
+	overflow: hidden // При наведение изображение увеличивается, без этого изображение увеличивается отдельно от секции, а не внутри нее
+	color: #333
+	&:nth-child(3)
+		grid-column: 3/5
+	&:nth-child(4)
+		grid-column: 1/3
+	&:hover
+		background-color: $light
+		h4
+			color: $dark
+		.blog-item-img
+			transform: scale(1.05) translateY(-6.5px) // Увеличивает изображение, Транслейт не дает увеличить изоб. по оси Y
+	&-img // обращаемся именно к img
+		height: 270px
+		background-size: cover
+		background-position: center
+		transition: transform .25s ease
+	&-content
+		padding: 10px
+		text-align: center
+		align-content: center
+		h4 
+			font-size: 18px
+			color: #666
+			line-height: 1.3
+			margin: 0
+			transition: color .25s ease
+
+		p
+			margin: 
+				top: 15px
+				bottom: 0
+
+.main-footer
+	padding: 60px 0
+	background-color: darken($dark, 8%) //Затемнение основного цвета на 8%
+	text-align: center
+	color: #4e5355
+
+.footer-logo
+	font-family: intro-grid, sans-serif
+	font-size: 22px
+	line-height: 1.16
+	span
+		display: block
+		color: #707476
+		font-size: 27px
+
+.footer-copy
+	font-size: 20px
+	font-weight: bold
+	color: #494d50
+	margin-top: 20px
+
+
+		
+
+
+
+
+		
+
+@import "media" // Всегда в конце
